@@ -1,4 +1,4 @@
-#jenkins prowler-terraform 
+ 
 pipeline {
     agent any
 
