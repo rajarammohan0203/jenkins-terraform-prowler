@@ -31,7 +31,10 @@ pipeline {
             sh ('terraform ${action} --auto-approve')
          }
     }
-    stage('Git-Clone') { 
+    stage('Git-Clone') {
+            steps {
+                cleanWs()
+            }
             steps {
                 sh 'git clone https://github.com/prowler-cloud/prowler'
                 sh 'echo "clone complete"'
