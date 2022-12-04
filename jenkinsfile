@@ -33,7 +33,7 @@ pipeline {
     }
     stage('Git-Clone') {
             steps {
-                sh 'rm -rf prowler/*'
+                
                 sh 'git clone https://github.com/prowler-cloud/prowler'
                 sh 'echo "clone complete"'
             }
