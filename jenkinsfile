@@ -38,9 +38,9 @@ pipeline {
                 sh 'echo "clean complete"'
             }
     }
-    stage('Git-Clone') {
+    stage('Git-Clone') { 
             steps {
-                
+
                 sh 'git clone https://github.com/prowler-cloud/prowler'
                 sh 'echo "clone complete"'
             }
@@ -62,9 +62,9 @@ pipeline {
                 }
            }
      }
-     post {
+    post {
         always {
-            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+            emailext body: 'Report output file', subject: 'Prowler Scan Report', to: 'rajaram.s@cloudifyops.com'
         }
     }
     }
