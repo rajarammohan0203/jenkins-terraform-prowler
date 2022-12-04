@@ -71,7 +71,7 @@ pipeline {
     }
         post {
             always{
-                sh 
+                 
                 archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
                 
                 emailext to: "rajaram.s@cloudifyops.com",
