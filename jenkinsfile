@@ -73,6 +73,7 @@ pipeline {
     }
         post {
             always{
+                sh "cd /var/lib/jenkins/workspace/prowler-terraform/prowler/output"
                 archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
                 
                 emailext to: "rajaram.s@cloudifyops.com",
