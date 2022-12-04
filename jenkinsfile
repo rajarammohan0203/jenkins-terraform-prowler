@@ -1,4 +1,3 @@
- 
 pipeline {
     agent any
 
@@ -14,12 +13,47 @@ pipeline {
              sh ('terraform init')
         }
     }
+       stage ("terraform validate") {
+        steps {
+             sh ('terraform validate')
+        }
+    }
+    
+    stage ("terraform plan") {
+        steps {
+             sh ('terraform plan')
+        }
+    }
+
        stage ("terraform Action") {  
          steps {
             echo "Terraform action is --> ${action}"
             sh ('terraform ${action} --auto-approve')
          }
-       }
+    }
+    stage('Git-Clone') { 
+            steps {
+                sh 'git clone https://github.com/prowler-cloud/prowler'
+                sh 'echo "clone complete"'
+            }
+    }
+    stage("AWS-CLI"){
+           steps{
+             withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cli-prowler' ,
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID' ,
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
+                {
+                   sh '''
+                    echo "prowler-exe"
+                    ls -lah
+                    cd  /var/lib/jenkins/workspace/prowler-terraform/prowler/
+                    ./prowler -c check22 -r us-east-1 -M csv -B aws-raja-emr-output/prowler/
+                '''
+                }
+           }
+     }
     }
 
 }
