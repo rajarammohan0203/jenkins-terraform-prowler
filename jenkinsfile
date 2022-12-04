@@ -45,7 +45,7 @@ pipeline {
                 sh 'echo "clone complete"'
             }
     }
-    stage("AWS-CLI"){
+    stage("Prowler-scan"){
            steps{
              withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
