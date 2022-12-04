@@ -62,11 +62,15 @@ pipeline {
                 }
            }
      }
-    post {
-        always {
-            emailext body: 'Report output file', subject: 'Prowler Scan Report', to: 'rajaram.s@cloudifyops.com'
-        }
+     
+    stage('email') { 
+            steps {
+                
+                echo 'Sending Email to Engineering Team'
+                emailext body: 'Report output file', subject: 'Prowler Scan Report', to: 'rajaram.s@cloudifyops.com'
+            }
     }
+   
     }
 
 }
