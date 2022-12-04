@@ -63,13 +63,25 @@ pipeline {
            }
      }
      
-    stage('email') { 
+    stage('Email') {
             steps {
-                
-                echo 'Sending Email to Engineering Team'
-                emailext body: 'Report output file', subject: 'Prowler Scan Report', to: 'rajaram.s@cloudifyops.com'
+                sh "cd /var/lib/jenkins/workspace/prowler-terraform/prowler/output"
+                sh 'pwd'
+                sh 'echo "Report generate"'
+                    }
             }
     }
+        post {
+            always{
+                archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
+                
+                emailext to: "rajaram.s@cloudifyops.com",
+                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                attachmentsPattern: '*.csv'
+                
+            cleanWs()
+            }
    
     }
 
