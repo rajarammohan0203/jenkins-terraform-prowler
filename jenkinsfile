@@ -41,7 +41,7 @@ pipeline {
     stage('Git-Clone') { 
             steps {
 
-                sh 'git clone https://github.com/prowler-cloud/prowler'
+                sh 'git clone -b prowler-2 https://github.com/prowler-cloud/prowler'
                 sh 'echo "clone complete"'
             }
     }
